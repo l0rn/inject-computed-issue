@@ -22,7 +22,7 @@ export default defineComponent({
       marker
         .setLngLat([props.location.lng, props.location.lat])
         // The property this.map is now inferred with ComputedRef<mapboxgl.Map> | undefined although the actual value is already unwrapped
-        .addTo(map!!.value!!)
+        .addTo(map!.value!)
     })
   }
 })

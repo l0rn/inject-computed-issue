@@ -7,7 +7,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, computed, provide, onMounted, InjectionKey, PropType, ref, ComputedRef } from 'vue'
+import { defineComponent, readonly, provide, onMounted, InjectionKey, PropType, ref, ComputedRef } from 'vue'
 import mapboxgl from 'mapbox-gl'
 import { LocationDto } from '@/api/model/LocationDto'
 
@@ -28,7 +28,7 @@ export default defineComponent({
     const initialized = ref(false)
 
     // inferred type of computed(() => map.value) is obviously ComputedRef<mapboxgl.Map>, but that's not what i want in the injected property (but the unwrapped one)
-    provide(MapInject, computed(() => map.value))
+    provide(MapInject, readonly(map))
 
     onMounted(() => {
       map.value = new mapboxgl.Map({
