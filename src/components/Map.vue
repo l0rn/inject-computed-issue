@@ -12,7 +12,7 @@ import mapboxgl from 'mapbox-gl'
 import { LocationDto } from '@/api/model/LocationDto'
 
 // I would assume that I'd like the type to be InjectionKey<mapboxgl.Map>, but then provide complains
-export const MapInject: InjectionKey<ComputedRef<mapboxgl.Map>> = Symbol()
+export const MapInject: InjectionKey<ComputedRef<mapboxgl.Map | null>> = Symbol()
 
 export default defineComponent({
   name: 'Map',
