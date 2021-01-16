@@ -15,15 +15,14 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
-    const map = inject(MapInject)
+  inject: { map: MapInject },
+  mounted() {
     const marker = new mapboxgl.Marker()
-    onMounted(() => {
-      marker
-        .setLngLat([props.location.lng, props.location.lat])
-        // The property this.map is now inferred with ComputedRef<mapboxgl.Map> | undefined although the actual value is already unwrapped
-        .addTo(map!!.value!!)
-    })
+    marker
+      .setLngLat([this.location.lng, this.location.lat])
+      // @ts-ignore type inference does not work!
+      .addTo(this.map.value)
+
   }
 })
 
