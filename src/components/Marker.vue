@@ -1,10 +1,8 @@
 <template>
-  <div
-    class="marker"
-  />
+  <div />
 </template>
 <script lang="ts">
-import { defineComponent, inject, PropType } from 'vue'
+import { defineComponent, inject, onMounted, PropType } from 'vue'
 import mapboxgl from 'mapbox-gl'
 import { LocationDto } from '@/api/model/LocationDto'
 import { MapInject } from './Map.vue'
@@ -17,23 +15,15 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
-    return {
-      map: inject(MapInject)
-    }
-  },
-  data() {
-    return {
-      accessToken: process.env.VUE_APP_MAPBOX_TOKEN,
-      marker: new mapboxgl.Marker()
-    }
-  },
-  mounted() {
-
-    this.marker
-      .setLngLat([this.location.lng, this.location.lat])
-      // The property this.map is now inferred with ComputedRef<mapboxgl.Map> | undefined although the actual value is already unwrapped
-      .addTo(this.map!!)
+  setup(props) {
+    const map = inject(MapInject)
+    const marker = new mapboxgl.Marker()
+    onMounted(() => {
+      marker
+        .setLngLat([props.location.lng, props.location.lat])
+        // The property this.map is now inferred with ComputedRef<mapboxgl.Map> | undefined although the actual value is already unwrapped
+        .addTo(map!!.value!!)
+    })
   }
 })
 
